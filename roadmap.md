@@ -168,36 +168,38 @@ All persona/config files live in **git** so changes are diffable and revertable.
 
 ## Phased roadmap
 
-### Phase 1 — Talk to it ← **you are here**
+### Phase 1 — Talk to it ✅ **complete**
 
 **Goal:** `main` agent replies in Telegram via local `qwen2.5:3b`. Nothing else.
 
-| Step | Action |
-|------|--------|
-| 1 | `brew install ollama` → `ollama pull qwen2.5:3b` |
-| 2 | `curl http://127.0.0.1:11434/api/tags` |
-| 3 | `curl -fsSL https://openclaw.ai/install.sh \| bash` |
-| 4 | `cp .env.example .env` — Telegram token, chat ID, gateway token |
-| 5 | `./scripts/setup-openclaw.sh` |
-| 6 | `./scripts/openclaw.sh gateway install --force --wrapper scripts/openclaw.sh` |
-| 7 | `./scripts/openclaw.sh gateway start` |
-| 8 | DM bot on Telegram — get a local reply |
+| Step | Action | Status |
+|------|--------|--------|
+| 1 | `brew install ollama` → `ollama pull qwen2.5:3b` | ✅ |
+| 2 | Verify Ollama is serving (`curl http://localhost:<port>/api/tags`) | ✅ |
+| 3 | `curl -fsSL https://openclaw.ai/install.sh \| bash` | ✅ |
+| 4 | `cp .env.example .env` — Telegram token, chat ID, gateway token | ✅ |
+| 5 | `./scripts/setup-openclaw.sh` | ✅ |
+| 6 | `./scripts/openclaw.sh gateway install --force --wrapper scripts/openclaw.sh` | ✅ |
+| 7 | `./scripts/openclaw.sh gateway start` (foreground if LaunchAgent fails) | ✅ |
+| 8 | DM bot on Telegram — get a local reply | ✅ |
 
-**Done when:** bot replies without cloud APIs.
+**Done when:** bot replies without cloud APIs. **Met.**
 
-**Not in Phase 1:** website edits, photos, fine-tuning, second agent.
+**Not in Phase 1:** website edits, photos, fine-tuning, second model instance.
 
 ---
 
-### Phase 2 — Website agent (text only)
+### Phase 2 — Website agent (text only) ← **you are here**
 
 **Goal:** one approved site edit goes live.
 
-| Step | Action |
-|------|--------|
-| 9 | Confirm `~/Desktop/foobaraguilar.github.io` (or `WEBSITE_REPO`) |
-| 10 | `@website change the hero tagline to "..."` |
-| 11 | Agent shows diff → you approve → commit + push |
+| Step | Action | Status |
+|------|--------|--------|
+| 9 | Confirm `WEBSITE_REPO` points at local GitHub Pages clone | ⬜ |
+| 10 | `@website change the hero tagline to "..."` | ⬜ |
+| 11 | Agent shows diff → you approve → commit + push | ⬜ |
+
+**In place already:** `website` agent in `openclaw/config.yaml`, workspace at `agents/website/`, `delegates_to` from main, `coding` tools profile. Both agents share one `qwen2.5:3b` model (CPU-efficient; see README).
 
 **Rollback:** `git revert` on the website repo if a bad edit ships.
 
@@ -292,10 +294,15 @@ You train in PyTorch/Hugging Face on cloud GPU, then import to Ollama on the Mac
 | Component | Status |
 |-----------|--------|
 | MVP scaffold | ✅ |
-| Phase 1 — Telegram + Ollama | ⬜ run steps |
-| Website agent (Phase 2) | ⬜ stub |
+| README + architecture diagram | ✅ |
+| Phase 1 — Telegram + Ollama | ✅ complete |
+| Single shared `qwen2.5:3b` (main + website) | ✅ by design |
+| Website agent config + workspace | ✅ stub wired |
+| Phase 2 — approved site edit E2E | 🚧 in progress |
+| Main Agent workspace docs | 🚧 partially filled |
+| Gateway LaunchAgent (persistent) | ⚠️ foreground workaround |
 | Per-agent models (Phase 3) | ⬜ |
-| Fine-tuned models (Phase 4) | ⬜ |
+| Fine-tuned models + vision (Phase 4) | ⬜ |
 
 ---
 

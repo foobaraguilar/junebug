@@ -27,7 +27,7 @@ The diagram above shows the long-term architecture. Components shown with dashed
 | **Main Agent** (`main`) | Default entry point. Chats with the user and decides whether to handle a request or delegate it. Workspace: `agents/main/` |
 | **Website Agent** (`website`) | Handles website updates requested directly with `@website` or delegated by the Main Agent. Workspace: `agents/website/` |
 | **Approval Gate** | Requires Telegram confirmation before any external action (pushes, emails, etc.) |
-| **Ollama** | Runs local model inference on `127.0.0.1:11434` |
+| **Ollama** | Runs local model inference on `localhost:xxxx` |
 | **Claude Code** | Development tool used to edit configuration and agent workspaces. Not part of the runtime system. |
 
 ### Model roadmap
@@ -162,7 +162,7 @@ https://api.telegram.org/bot<TOKEN>/getUpdates
 If the macOS LaunchAgent exits immediately (exit 126), run the gateway in the foreground instead:
 
 ```bash
-./scripts/openclaw.sh gateway --port 18790
+./scripts/openclaw.sh gateway --port xxxx
 ```
 
 This is currently the recommended workaround until the LaunchAgent issue is resolved.
@@ -210,7 +210,7 @@ update my site hero to say "Hello world"
 Dashboard (local only):
 
 ```text
-http://127.0.0.1:18790/
+http://localhost:xxxx/
 ```
 
 ---
