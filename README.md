@@ -27,7 +27,7 @@ The diagram above shows the long-term architecture. Components shown with dashed
 | **Main Agent** (`main`) | Default entry point. Chats with the user and decides whether to handle a request or delegate it. Workspace: `agents/main/` |
 | **Website Agent** (`website`) | Handles website updates requested directly with `@website` or delegated by the Main Agent. Workspace: `agents/website/` |
 | **Approval Gate** | Requires Telegram confirmation before any external action (pushes, emails, etc.) |
-| **Ollama** | Runs local model inference on `localhost:xxxx` |
+| **Ollama** | Runs local model inference on `localhost:xxxx` (default port `11434`) |
 | **Claude Code** | Development tool used to edit configuration and agent workspaces. Not part of the runtime system. |
 
 ### Model roadmap
@@ -159,7 +159,7 @@ https://api.telegram.org/bot<TOKEN>/getUpdates
 
 ### LaunchAgent issue
 
-If the macOS LaunchAgent exits immediately (exit 126), run the gateway in the foreground instead:
+If the macOS LaunchAgent exits immediately (exit 126), run the gateway in the foreground instead (default port **18790** — see [Default ports](#default-ports)):
 
 ```bash
 ./scripts/openclaw.sh gateway --port xxxx
@@ -185,6 +185,17 @@ After changing either `config.yaml` or `.env`:
 ./scripts/openclaw.sh gateway restart
 ```
 
+### Default ports
+
+Replace `xxxx` in examples with the port your setup uses. Out of the box:
+
+| Service | Default port | Where to change it |
+| --- | --- | --- |
+| **Ollama** | `11434` | `.env` (`OLLAMA_HOST`) or `openclaw/config.yaml` (`ollama.base_url`) |
+| **OpenClaw gateway** | `18790` | `openclaw/config.yaml` (`gateway.port`) |
+
+Ollama uses `11434` by default when installed via Homebrew. The gateway dashboard is at `http://localhost:18790/` unless `gateway.port` is changed.
+
 ---
 
 ## Usage
@@ -207,7 +218,7 @@ hi
 update my site hero to say "Hello world"
 ```
 
-Dashboard (local only):
+Dashboard (local only; default port **18790**):
 
 ```text
 http://localhost:xxxx/
