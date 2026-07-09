@@ -1,0 +1,49 @@
+# Routing — gateway dispatches; main delegates to specialists
+# Claude Code edits this file. Re-run: ./scripts/setup-openclaw.sh
+
+default_agent: main
+
+agents:
+  main:
+    name: Junebug
+    emoji: "🪲"
+    model: ollama/qwen2.5:3b
+    workspace: agents/main
+    mentions:
+      - "@junebug"
+      - openclaw
+    delegates_to:
+      - website
+    parameters:
+      temperature: 0.3
+      max_tokens: 1024
+
+  website:
+    name: Website
+    emoji: "🌐"
+    model: ollama/qwen2.5:3b
+    workspace: agents/website
+    mentions:
+      - "@website"
+    tools:
+      profile: coding
+    parameters:
+      temperature: 0.2
+      max_tokens: 2048
+
+ollama:
+  base_url: http://127.0.0.1:11434
+  models:
+    - id: qwen2.5:3b
+      name: Qwen 2.5 3B
+
+gateway:
+  port: 18790
+  bind: loopback
+
+tools:
+  profile: minimal
+
+access:
+  telegram_dm_policy: allowlist
+  groups_require_mention: true

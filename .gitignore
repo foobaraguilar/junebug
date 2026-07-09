@@ -1,0 +1,11 @@
+.env
+.DS_Store
+
+# Agent workspace runtime (SOUL.md is tracked)
+agents/**/memory/*
+agents/**/MEMORY.md
+agents/**/.openclaw/
+
+# OpenClaw generated runtime state
+openclaw/runtime/**
+!openclaw/runtime/.gitkeep
